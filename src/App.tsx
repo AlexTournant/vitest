@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline, Box } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
+
+import { useStore } from './store/useStore';
+import Layout from './components/Layout/Layout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import TicketBoard from './pages/TicketBoard.tsx';
+import TicketDetail from './pages/TicketDetail';
+import Projects from './pages/Projects';
+import Users from './pages/Users';
+import Reports from './pages/Reports';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 5 * 60 * 1000, // 5 minutes
+            retry: 1,
+        },
+    },
+});
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
+        secondary: {
+            main: '#dc004e',
+        },
+        background: {
+            default: '#f5f5f5',
+        },
+    },
+    typography: {
+        fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
+    const { isAuthenticated } = useStore();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Router>
+                    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+                        {isAuthenticated ? (
+                            <Layout>
+                                <Routes>
+                                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                    <Route path="/dashboard" element={<Dashboard />} />
+                                    <Route path="/tickets" element={<TicketBoard />} />
+                                    <Route path="/tickets/:ticketId" element={<TicketDetail />} />
+                                    <Route path="/projects" element={<Projects />} />
+                                    <Route path="/users" element={<Users />} />
+                                    <Route path="/reports" element={<Reports />} />
+                                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                                </Routes>
+                            </Layout>
+                        ) : (
+                            <Routes>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="*" element={<Navigate to="/login" replace />} />
+                            </Routes>
+                        )}
+                    </Box>
+                </Router>
+                <Toaster position="top-right" />
+            </ThemeProvider>
+        </QueryClientProvider>
+    );
 }
 
-export default App
+export default App;
