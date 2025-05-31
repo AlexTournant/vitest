@@ -54,7 +54,7 @@ const Login: React.FC = () => {
                 setError('Email ou mot de passe incorrect');
             }
         } catch (err) {
-            setError('Erreur de connexion');
+            setError('Erreur de connexion'+ err);
         }
     };
 

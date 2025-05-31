@@ -31,8 +31,13 @@ interface AppState {
     setTickets: (tickets: Ticket[]) => void;
     setSelectedTicket: (ticket: Ticket | null) => void;
     updateTicket: (ticket: Ticket) => void;
-    setTicketFilters: (filters: any) => void;
-    setProjects: (projects: Project[]) => void;
+    setTicketFilters: (filters: {
+            status?: string[];
+            priority?: string[];
+            assignedTo?: string[];
+            project?: string;
+            search?: string;
+        }) => void;    setProjects: (projects: Project[]) => void;
     setSelectedProject: (project: Project | null) => void;
     toggleSidebar: () => void;
     setLoading: (loading: boolean) => void;
@@ -40,7 +45,7 @@ interface AppState {
 
 export const useStore = create<AppState>()(
     devtools(
-        (set, get) => ({
+        (set) => ({
             // Initial state
             user: null,
             isAuthenticated: false,
