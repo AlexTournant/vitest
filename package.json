@@ -30,8 +30,11 @@
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.28.0",
     "typescript-eslint": "^8.33.0",
+    "@vitejs/plugin-react": "4.5.0",
     "zod": "^3.23.8",
-    "zustand": "^5.0.2"
+    "zustand": "^5.0.2",
+    "vite": "6.3.5",
+    "vitest": "3.1.4"
   },
   "devDependencies": {
     "@eslint/js": "8.57.0",
@@ -39,13 +42,10 @@
     "@testing-library/react": "^16.3.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
-    "@vitejs/plugin-react": "4.5.0",
     "@vitest/coverage-v8": "^3.1.4",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "prettier": "3.5.3",
-    "typescript": "5.8.3",
-    "vite": "6.3.5",
-    "vitest": "3.1.4"
+    "typescript": "5.8.3"
   }
 }
