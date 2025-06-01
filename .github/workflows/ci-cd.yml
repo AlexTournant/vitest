@@ -113,5 +113,6 @@ jobs:
       - name: Deploy to production
         run: |
           echo "Deploying to production..."
-          # Ajoutez ici vos commandes de déploiement
-          # Par exemple: kubectl, docker-compose, etc.
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d --build
