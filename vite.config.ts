@@ -1,11 +1,13 @@
 import {defineConfig} from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import typescript from 'vite-plugin-typescript';
 
 export default defineConfig({
-    plugins: [react()],
-    root: './',
+    plugins: [react(),typescript()],
+    base: './',
     build: {
         outDir: 'dist',
+
     },
     test: {
         globals: true,
