@@ -113,6 +113,3 @@ jobs:
       - name: Deploy to production
         run: |
           echo "Deploying to production..."
-          docker-compose down
-          docker-compose pull
-          docker-compose up -d --build
